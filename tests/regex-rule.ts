@@ -6,10 +6,8 @@ describe('RegexRule', () => {
       return 'custom-rule';
     }
 
-    protected run (resolvedPath: string) {
-      if (resolvedPath.indexOf('error') >= 0) {
-        this.report(resolvedPath);
-      }
+    protected getPart (resolvedPath: string) {
+      return resolvedPath;
     }
   }
 
