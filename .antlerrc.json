@@ -1,0 +1,29 @@
+{
+  "rules": {
+    "extension": [
+      2,
+      {
+        "allow": "tsx?"
+      }
+    ],
+    "file-name": [
+      2,
+      {
+        "allow": "^[a-z-]+\\.[a-z-]+$"
+      }
+    ],
+    "directory-name": [
+      2,
+      {
+        "allow": "^[a-z-]+\\.[a-z-]+$",
+        "disallow": "^(actions|reducers|components|__tests__)$"
+      }
+    ],
+    "path": [
+      2,
+      {
+        "disallow": "common/[a-z-]+\\.[a-z-]+$"
+      }
+    ]
+  }
+}
