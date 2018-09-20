@@ -7,7 +7,8 @@
   "scripts": {
     "dist": "rm -rf dist && mkdir -p dist && tsc --project tsconfig.dist.json",
     "lint": "tsc --noEmit && tslint --project tsconfig.json '{src,tests}/**/*.ts?(x)'",
-    "test": "npm run lint",
+    "tests": "jest",
+    "test": "npm run lint && npm run tests -- --coverage --runInBand",
     "prepare": "npm run dist"
   },
   "repository": {
@@ -35,7 +36,39 @@
     "typescript": "^2.9.2"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.2",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.0",
     "tslint": "^5.11.0",
     "tslint-eslint-rules": "^5.4.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.(js|jsx|ts|tsx)"
+    ],
+    "setupFiles": [
+      "<rootDir>/tests/helpers/setup.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/tests/.*|\\.(test|spec))\\.(ts|tsx|js|jsx)$",
+    "testPathIgnorePatterns": [
+      "<rootDir>/tests/helpers/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ]
   }
 }
