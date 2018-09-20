@@ -2,12 +2,12 @@
 
 import fs from 'fs';
 import path from 'path';
-import { crawl } from './index';
+import crawl from './index';
 
 const CWD = process.cwd();
 
 function init () {
-  const [,, filePath] = process.argv;
+  const [ , , filePath] = process.argv;
 
   if (!filePath) {
     console.error('No directory specified');
@@ -21,7 +21,7 @@ function init () {
     return process.exit(1);
   }
 
-  crawl(filePath);
+  crawl(resolvedPath);
 }
 
 init();

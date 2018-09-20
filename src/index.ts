@@ -3,7 +3,7 @@ import path from 'path';
 
 const CWD = process.cwd();
 
-export function crawl (filePath: string, indent = '') {
+function crawl (filePath: string, indent = '') {
   const resolvedPath = path.resolve(CWD, filePath);
 
   console.log(`${indent}${path.basename(resolvedPath)}`);
@@ -14,3 +14,5 @@ export function crawl (filePath: string, indent = '') {
     });
   }
 }
+
+export default crawl;
