@@ -1,0 +1,41 @@
+{
+  "name": "antler",
+  "version": "0.0.0",
+  "description": "Directory structure linter",
+  "main": "dist/index.js",
+  "bin": "dist/cli.js",
+  "scripts": {
+    "dist": "rm -rf dist && mkdir -p dist && tsc --project tsconfig.dist.json",
+    "lint": "tsc --noEmit && tslint --project tsconfig.json '{src,tests}/**/*.ts?(x)'",
+    "test": "npm run lint",
+    "prepare": "npm run dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakesidsmith/antler.git"
+  },
+  "keywords": [
+    "directory",
+    "structuer",
+    "linter",
+    "linting",
+    "folder",
+    "directories",
+    "folders",
+    "enforce"
+  ],
+  "author": "Jake 'Sid' Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jakesidsmith/antler/issues"
+  },
+  "homepage": "https://github.com/jakesidsmith/antler#readme",
+  "dependencies": {
+    "@types/node": "^10.10.1",
+    "typescript": "^2.9.2"
+  },
+  "devDependencies": {
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0"
+  }
+}
