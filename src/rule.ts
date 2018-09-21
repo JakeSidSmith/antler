@@ -17,9 +17,9 @@ export abstract class Rule {
     }
   }
 
-  protected abstract getName(): string;
+  public abstract run(resolvedPath: string): void;
 
-  protected abstract run(resolvedPath: string): void;
+  protected abstract getName(): string;
 
   protected report (error: Error | string) {
     throw new AntlerError(

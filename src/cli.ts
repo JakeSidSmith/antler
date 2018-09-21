@@ -2,13 +2,10 @@
 
 import fs from 'fs';
 import path from 'path';
-import { AntlerError } from './antler-error';
 import getConfig from './config';
+import { CWD, MESSAGE_PREFIX } from './constants';
 import crawl from './index';
 import * as rules from './rules';
-
-const MESSAGE_PREFIX = '[Antler] ';
-const CWD = process.cwd();
 
 function init () {
   const { configPath, config } = getConfig();
@@ -41,8 +38,5 @@ try {
   const message = error && error.message ? error.message : error;
 
   console.error(`${MESSAGE_PREFIX}${message}`); // tslint:disable-line:no-console
-
-  if (!(error instanceof AntlerError)) {
-    process.exit(1);
-  }
+  process.exit(1);
 }

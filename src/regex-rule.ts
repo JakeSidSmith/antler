@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { Rule } from './rule';
 import { Level, RuleConfig } from './types';
 
@@ -39,9 +40,11 @@ export abstract class RegexRule extends Rule {
 
   }
 
-  protected abstract getPart (resolvedPath: string): string;
+  public run (resolvedPath: string) {
+    if (!fs.lstatSync(resolvedPath).isFile()) {
+      return;
+    }
 
-  protected run (resolvedPath: string) {
     const part = this.getPart(resolvedPath);
 
     if (this.allow instanceof RegExp) {
@@ -68,4 +71,6 @@ export abstract class RegexRule extends Rule {
       }
     }
   }
+
+  protected abstract getPart (resolvedPath: string): string;
 }

@@ -1,11 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import { CWD, FILE_NAME, UTF8 } from './constants';
 import * as rules from './rules';
 import { Config } from './types';
-
-const UTF8 = 'utf8';
-const CWD = process.cwd();
-const FILE_NAME = '.antlerrc.json';
 
 function getConfig (): {configPath: string, config: Config} {
   let directoryPath = CWD;
