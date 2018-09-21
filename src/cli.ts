@@ -24,7 +24,7 @@ function init () {
 
   const { configPath } = getConfig();
 
-  console.info(`${MESSAGE_PREFIX}Found config file at ${configPath}`); // tslint:disable-line:no-console
+  console.error(`${MESSAGE_PREFIX}Found config file at ${configPath}`); // tslint:disable-line:no-console
 
   crawl(resolvedPath);
 }
