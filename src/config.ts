@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import * as rules from './rules';
 
 const UTF8 = 'utf8';
 const CWD = process.cwd();
@@ -27,6 +28,16 @@ function getConfig () {
 
       if (!('rules' in config)) {
         throw new Error('Invalid config - no rules key');
+      }
+
+      if (!Object.keys(config.rules).length) {
+        throw new Error('Invalid config - no rules configured');
+      }
+
+      for (const key in config.rules) {
+        if (!(key in rules)) {
+          throw new Error(`Unknown rule - ${key}`);
+        }
       }
 
       return {

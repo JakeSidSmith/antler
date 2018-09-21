@@ -1,7 +1,7 @@
 import path from 'path';
 import RegexRule from '../regex-rule';
 
-class Extension extends RegexRule {
+export class Extension extends RegexRule {
   protected getName() {
     return 'Extension';
   }
@@ -10,5 +10,3 @@ class Extension extends RegexRule {
     return path.extname(resolvedPath);
   }
 }
-
-export default Extension;
