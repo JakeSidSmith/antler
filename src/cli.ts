@@ -14,7 +14,7 @@ function init () {
     return process.exit(1);
   }
 
-  const resolvedPath = path.resolve(CWD, filePath);
+  const resolvedPath = path.join(CWD, filePath);
 
   if (!fs.lstatSync(resolvedPath).isDirectory()) {
     console.error(`${resolvedPath} is not a directory`);
