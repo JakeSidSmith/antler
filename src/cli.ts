@@ -23,7 +23,7 @@ function init () {
   const resolvedPath = path.resolve(CWD, filePath);
 
   if (!fs.lstatSync(resolvedPath).isDirectory()) {
-    throw new Error(`${resolvedPath} is not a directory`);
+    throw new Error(`Provided path ${resolvedPath} is not a directory`);
   }
 
   crawl(resolvedPath);
