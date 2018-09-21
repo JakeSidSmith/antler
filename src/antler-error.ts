@@ -1,6 +1,6 @@
 import { Level } from './types';
 
-class AntlerError extends Error {
+export class AntlerError extends Error {
   public message: string;
   public level: Level;
 
@@ -11,5 +11,3 @@ class AntlerError extends Error {
     this.level = level;
   }
 }
-
-export default AntlerError;

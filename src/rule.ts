@@ -1,8 +1,8 @@
-import AntlerError from './antler-error';
+import { AntlerError } from './antler-error';
 import { LEVELS } from './constants';
 import { Level, RuleConfig, RuleOptions } from './types';
 
-abstract class Rule {
+export abstract class Rule {
   protected options?: RuleOptions;
   protected level: Level;
 
@@ -48,5 +48,3 @@ abstract class Rule {
     }
   }
 }
-
-export default Rule;

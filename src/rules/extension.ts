@@ -1,5 +1,5 @@
 import path from 'path';
-import RegexRule from '../regex-rule';
+import { RegexRule } from '../regex-rule';
 
 export class Extension extends RegexRule {
   protected getName() {

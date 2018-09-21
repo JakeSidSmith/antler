@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import AntlerError from './antler-error';
+import { AntlerError } from './antler-error';
 import getConfig from './config';
 import crawl from './index';
 

@@ -1,10 +1,10 @@
-import Rule from './rule';
+import { Rule } from './rule';
 import { RuleConfig } from './types';
 
 const REGEX_FLAGS = 'i';
 const VALID_KEYS = ['allow', 'disallow'];
 
-abstract class RegexRule extends Rule {
+export abstract class RegexRule extends Rule {
   protected allow: RegExp | ReadonlyArray<RegExp>;
   protected disallow: RegExp | ReadonlyArray<RegExp>;
 
@@ -69,5 +69,3 @@ abstract class RegexRule extends Rule {
     }
   }
 }
-
-export default RegexRule;

@@ -1,4 +1,4 @@
-import RegexRule from '../src/regex-rule';
+import { RegexRule } from '../src/regex-rule';
 
 describe('RegexRule', () => {
   class CustomRule extends RegexRule {
