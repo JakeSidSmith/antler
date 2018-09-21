@@ -1,5 +1,5 @@
 import Rule from './rule';
-import { RuleConfig, RuleOptionsObject } from './types';
+import { RuleConfig } from './types';
 
 const VALID_KEYS = ['allow', 'disallow'];
 
@@ -10,17 +10,32 @@ abstract class RegexRule extends Rule {
   public constructor (config: RuleConfig) {
     super(config);
 
-    const {
-      allow = '',
-      disallow = '',
-    } = this.options as RuleOptionsObject;
+    if (this.options) {
+      if (!(this.options.allow || this.options.disallow)) {
+        this.report(`Invalid option keys - must include one of ${VALID_KEYS.join(', ')}`);
+      }
 
-    this.allow = typeof allow === 'string' ?
-      new RegExp(allow) :
-      allow.map((pattern) => new RegExp(pattern));
-    this.disallow = typeof disallow === 'string' ?
-      new RegExp(disallow) :
-      disallow.map((pattern) => new RegExp(pattern));
+      for (const key in this.options) {
+        if (VALID_KEYS.indexOf(key) < 0) {
+          this.report(`Invalid option key - ${key}`);
+        }
+      }
+
+      const {
+        allow = '',
+        disallow = '',
+      } = this.options;
+
+      this.allow = typeof allow === 'string' ?
+        new RegExp(allow) :
+        allow.map((pattern) => new RegExp(pattern));
+      this.disallow = typeof disallow === 'string' ?
+        new RegExp(disallow) :
+        disallow.map((pattern) => new RegExp(pattern));
+    } else {
+      this.report('Invalid options - must be an object');
+    }
+
   }
 
   protected abstract getPart (resolvedPath: string): string;
@@ -49,24 +64,6 @@ abstract class RegexRule extends Rule {
         if (!disallow.test(part)) {
           return this.report(`Matches disallowed pattern - ${disallow}`);
         }
-      }
-    }
-  }
-
-  protected validateOptions (options: RuleOptionsObject) {
-    if (!Object.keys(options).length) {
-      return this.report('No keys in options');
-    }
-
-    for (const key in options) {
-      if (VALID_KEYS.indexOf(key) < 0) {
-        return this.report(`Invalid key in options - ${key}`);
-      }
-    }
-
-    for (const key of VALID_KEYS) {
-      if ((key in options) && !(typeof options[key] === 'string' || Array.isArray(options[key]))) {
-        return this.report(`Type of key ${key} must be a string or array of strings`);
       }
     }
   }
