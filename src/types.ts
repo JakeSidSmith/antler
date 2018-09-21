@@ -1,15 +1,18 @@
+export type Level = 'off' | 'warning' | 'error';
+
 export interface Config {
   readonly rules: Rules;
 }
 
 export interface Rules {
-  readonly [i: string]: RuleConfig;
+  readonly [i: string]: Level | RuleConfig;
 }
 
-export type RuleConfig = number | string | [number | string, RuleOptions];
+export interface RuleConfig {
+  readonly level?: Level;
+  readonly options?: RuleOptions;
+}
 
-export type RuleOptions = string | number | RuleOptionsObject;
-
-export interface RuleOptionsObject {
+export interface RuleOptions {
   readonly [i: string]: string | ReadonlyArray<string>;
 }
