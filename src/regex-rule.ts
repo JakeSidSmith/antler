@@ -1,5 +1,5 @@
 import { Rule } from './rule';
-import { RuleConfig } from './types';
+import { Level, RuleConfig } from './types';
 
 const REGEX_FLAGS = 'i';
 const VALID_KEYS = ['allow', 'disallow'];
@@ -8,7 +8,7 @@ export abstract class RegexRule extends Rule {
   protected allow: RegExp | ReadonlyArray<RegExp>;
   protected disallow: RegExp | ReadonlyArray<RegExp>;
 
-  public constructor (config: RuleConfig) {
+  public constructor (config: Level | RuleConfig) {
     super(config);
 
     if (this.options) {

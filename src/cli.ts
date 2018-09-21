@@ -5,6 +5,7 @@ import path from 'path';
 import { AntlerError } from './antler-error';
 import getConfig from './config';
 import crawl from './index';
+import * as rules from './rules';
 
 const MESSAGE_PREFIX = '[Antler] ';
 const CWD = process.cwd();
@@ -26,7 +27,12 @@ function init () {
     throw new Error(`Provided path ${resolvedPath} is not a directory`);
   }
 
-  crawl(resolvedPath, '', config);
+  const ruleInstances = Object.keys(config.rules).map((ruleName: keyof typeof rules) => {
+    const ruleConfig = config.rules[ruleName];
+    return new rules[ruleName](ruleConfig);
+  });
+
+  crawl(resolvedPath, '', ruleInstances);
 }
 
 try {

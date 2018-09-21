@@ -6,7 +6,7 @@ export abstract class Rule {
   protected options?: RuleOptions;
   protected level: Level;
 
-  public constructor (config: RuleConfig) {
+  public constructor (config: Level | RuleConfig) {
     if (typeof config === 'string') {
       this.setLevel(config);
     } else if (config && typeof config === 'object' && !Array.isArray(config)) {
