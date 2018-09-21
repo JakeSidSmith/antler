@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { Rule } from './rule';
 import { Level, RuleConfig } from './types';
 
@@ -41,7 +40,7 @@ export abstract class RegexRule extends Rule {
   }
 
   public run (resolvedPath: string) {
-    if (!fs.lstatSync(resolvedPath).isFile()) {
+    if (!this.shouldRun(resolvedPath)) {
       return;
     }
 
@@ -73,4 +72,5 @@ export abstract class RegexRule extends Rule {
   }
 
   protected abstract getPart (resolvedPath: string): string;
+  protected abstract shouldRun (resolvedPath: string): boolean;
 }

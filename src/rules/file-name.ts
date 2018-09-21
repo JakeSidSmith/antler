@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { RegexRule } from '../regex-rule';
 
-export class Extension extends RegexRule {
+export class FileName extends RegexRule {
   protected getName() {
-    return 'Extension';
+    return 'FileName';
   }
 
   protected shouldRun (resolvedPath: string) {
@@ -12,6 +12,6 @@ export class Extension extends RegexRule {
   }
 
   protected getPart (resolvedPath: string) {
-    return path.extname(resolvedPath);
+    return path.basename(resolvedPath);
   }
 }
