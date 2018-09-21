@@ -1,8 +1,10 @@
+import { Level } from './types';
+
 class AntlerError extends Error {
   public message: string;
-  public level: number;
+  public level: Level;
 
-  public constructor (message: string, level: number) {
+  public constructor (message: string, level: Level) {
     super(message);
 
     this.message = message;
