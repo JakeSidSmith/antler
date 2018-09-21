@@ -1,12 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 
-// import Extension from './rules/Extension';
-
-// const RULES_MAP = {
-//   Extension,
-// };
-
 const CWD = process.cwd();
 
 function crawl (filePath: string, indent = '') {
