@@ -59,12 +59,12 @@ export abstract class RegexRule extends Rule {
     }
 
     if (this.disallow instanceof RegExp) {
-      if (!this.disallow.test(part)) {
+      if (this.disallow.test(part)) {
         return this.report(`${resolvedPath} matches disallowed pattern - ${this.disallow}`);
       }
     } else if (Array.isArray(this.disallow)) {
       for (const disallow of this.disallow) {
-        if (!disallow.test(part)) {
+        if (disallow.test(part)) {
           return this.report(`${resolvedPath} matches disallowed pattern - ${disallow}`);
         }
       }
