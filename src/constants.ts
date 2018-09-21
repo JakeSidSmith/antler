@@ -1,1 +1,3 @@
-export const LEVELS = ['OFF', 'WARNING', 'ERROR'];
+import { Level } from './types';
+
+export const LEVELS: ReadonlyArray<Level> = ['off', 'warning', 'error'];
