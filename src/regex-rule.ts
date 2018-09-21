@@ -1,6 +1,7 @@
 import Rule from './rule';
 import { RuleConfig } from './types';
 
+const REGEX_FLAGS = 'i';
 const VALID_KEYS = ['allow', 'disallow'];
 
 abstract class RegexRule extends Rule {
@@ -27,11 +28,11 @@ abstract class RegexRule extends Rule {
       } = this.options;
 
       this.allow = typeof allow === 'string' ?
-        new RegExp(allow) :
-        allow.map((pattern) => new RegExp(pattern));
+        new RegExp(allow, REGEX_FLAGS) :
+        allow.map((pattern) => new RegExp(pattern, REGEX_FLAGS));
       this.disallow = typeof disallow === 'string' ?
-        new RegExp(disallow) :
-        disallow.map((pattern) => new RegExp(pattern));
+        new RegExp(disallow, REGEX_FLAGS) :
+        disallow.map((pattern) => new RegExp(pattern, REGEX_FLAGS));
     } else {
       this.report('Invalid options - must be an object');
     }
