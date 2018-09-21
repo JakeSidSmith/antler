@@ -10,13 +10,11 @@ import path from 'path';
 const CWD = process.cwd();
 
 function crawl (filePath: string, indent = '') {
-  const resolvedPath = path.join(CWD, filePath);
-
-  console.log(`${indent}${path.basename(resolvedPath)}`);
+  const resolvedPath = path.resolve(CWD, filePath);
 
   if (fs.lstatSync(resolvedPath).isDirectory()) {
     fs.readdirSync(resolvedPath).forEach((subFilePath) => {
-      crawl(path.join(resolvedPath, subFilePath), `  ${indent}`);
+      crawl(path.resolve(resolvedPath, subFilePath), `  ${indent}`);
     });
   }
 }

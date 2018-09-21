@@ -2,26 +2,41 @@
 
 import fs from 'fs';
 import path from 'path';
+import AntlerError from './antler-error';
+import getConfig from './config';
 import crawl from './index';
 
+const MESSAGE_PREFIX = '[Antler] ';
 const CWD = process.cwd();
 
 function init () {
   const [ , , filePath] = process.argv;
 
   if (!filePath) {
-    console.error('No directory specified');
-    return process.exit(1);
+    throw new Error('No directory specified');
   }
 
-  const resolvedPath = path.join(CWD, filePath);
+  const resolvedPath = path.resolve(CWD, filePath);
 
   if (!fs.lstatSync(resolvedPath).isDirectory()) {
-    console.error(`${resolvedPath} is not a directory`);
-    return process.exit(1);
+    throw new Error(`${resolvedPath} is not a directory`);
   }
+
+  const { configPath } = getConfig();
+
+  console.info(`${MESSAGE_PREFIX}Found config file at ${configPath}`); // tslint:disable-line:no-console
 
   crawl(resolvedPath);
 }
 
-init();
+try {
+  init();
+} catch (error) {
+  const message = error && error.message ? error.message : error;
+
+  console.error(`${MESSAGE_PREFIX}${message}`); // tslint:disable-line:no-console
+
+  if (!(error instanceof AntlerError)) {
+    process.exit(1);
+  }
+}

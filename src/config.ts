@@ -8,7 +8,7 @@ const FILE_NAME = '.antlerrc.json';
 function getConfig () {
   let directoryPath = CWD;
   let directoryName = path.basename(directoryPath);
-  let filePath = path.join(directoryPath, FILE_NAME);
+  let filePath = path.resolve(directoryPath, FILE_NAME);
 
   while (directoryName) {
     if (fs.existsSync(filePath) && fs.lstatSync(filePath).isFile()) {
@@ -17,7 +17,8 @@ function getConfig () {
       try {
         config = JSON.parse(fs.readFileSync(filePath, UTF8));
       } catch (error) {
-        throw new Error(`Error reading config file at ${filePath} - ${error && error.message ? error.message : error}`);
+        const message = error && error.message ? error.message : error;
+        throw new Error(`Error reading config file at ${filePath} - ${message}`);
       }
 
       if (!config || typeof config !== 'object' || Array.isArray(config)) {
@@ -28,12 +29,15 @@ function getConfig () {
         throw new Error('Invalid config - no rules key');
       }
 
-      return config;
+      return {
+        configPath: filePath,
+        config,
+      };
     }
 
-    directoryPath = path.join(directoryPath, '../');
+    directoryPath = path.resolve(directoryPath, '../');
     directoryName = path.basename(directoryPath);
-    filePath = path.join(directoryPath, FILE_NAME);
+    filePath = path.resolve(directoryPath, FILE_NAME);
   }
 
   throw new Error('Could not find an .antlerrc.json file in the current working directory or above');
