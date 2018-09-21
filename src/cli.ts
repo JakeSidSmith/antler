@@ -10,7 +10,7 @@ const MESSAGE_PREFIX = '[Antler] ';
 const CWD = process.cwd();
 
 function init () {
-  const { configPath } = getConfig();
+  const { configPath, config } = getConfig();
 
   console.error(`${MESSAGE_PREFIX}Found config file at ${configPath}`); // tslint:disable-line:no-console
 
@@ -26,7 +26,7 @@ function init () {
     throw new Error(`Provided path ${resolvedPath} is not a directory`);
   }
 
-  crawl(resolvedPath);
+  crawl(resolvedPath, '', config);
 }
 
 try {
