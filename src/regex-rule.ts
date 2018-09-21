@@ -45,24 +45,24 @@ abstract class RegexRule extends Rule {
 
     if (this.allow instanceof RegExp) {
       if (!this.allow.test(part)) {
-        return this.report(`Does not match allowed pattern - ${this.allow}`);
+        return this.report(`${part} does not match allowed pattern - ${this.allow}`);
       }
     } else if (Array.isArray(this.allow)) {
       for (const allow of this.allow) {
         if (!allow.test(part)) {
-          return this.report(`Does not match allowed pattern - ${allow}`);
+          return this.report(`${part} does not match allowed pattern - ${allow}`);
         }
       }
     }
 
     if (this.disallow instanceof RegExp) {
       if (!this.disallow.test(part)) {
-        return this.report(`Matches disallowed pattern - ${this.disallow}`);
+        return this.report(`${part} matches disallowed pattern - ${this.disallow}`);
       }
     } else if (Array.isArray(this.disallow)) {
       for (const disallow of this.disallow) {
         if (!disallow.test(part)) {
-          return this.report(`Matches disallowed pattern - ${disallow}`);
+          return this.report(`${part} matches disallowed pattern - ${disallow}`);
         }
       }
     }
