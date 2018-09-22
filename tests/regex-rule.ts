@@ -75,28 +75,37 @@ describe('RegexRule', () => {
       childNames: [],
     };
 
+    const validDirectoryNode: Node = {
+      ...invalidDirectoryNode,
+      path: 'src/valid',
+    };
+
     it('should report if paths do not match allowed paths string', () => {
       const instance = new DirectoryPath({level: 'error', options: {allow: '^src/valid$'}});
 
       expect(() => instance.run(invalidDirectoryNode)).toThrow('does not match allowed');
+      expect(() => instance.run(validDirectoryNode)).not.toThrow();
     });
 
     it('should report if paths do not match allowed paths array', () => {
       const instance = new DirectoryPath({level: 'error', options: {allow: ['^src/valid$']}});
 
       expect(() => instance.run(invalidDirectoryNode)).toThrow('does not match allowed');
+      expect(() => instance.run(validDirectoryNode)).not.toThrow();
     });
 
     it('should report if paths match disallowed paths string', () => {
       const instance = new DirectoryPath({level: 'error', options: {disallow: 'invalid'}});
 
       expect(() => instance.run(invalidDirectoryNode)).toThrow('matches disallowed');
+      expect(() => instance.run(validDirectoryNode)).not.toThrow();
     });
 
     it('should report if paths match disallowed paths array', () => {
       const instance = new DirectoryPath({level: 'error', options: {disallow: ['invalid']}});
 
       expect(() => instance.run(invalidDirectoryNode)).toThrow('matches disallowed');
+      expect(() => instance.run(validDirectoryNode)).not.toThrow();
     });
 
     it('should not run if shouldRun returns false', () => {
