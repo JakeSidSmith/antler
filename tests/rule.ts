@@ -82,4 +82,17 @@ describe('Rule', () => {
       expect((instance as any).level).toBe('error');
     });
   });
+
+  describe('setOptions', () => {
+    it('should error if options are not an object', () => {
+      expect(() => new NoDirectories({level: 'error', options: null} as any))
+        .toThrow('Invalid options - must be an object');
+
+      expect(() => new NoDirectories({level: 'error', options: []} as any))
+        .toThrow('Invalid options - must be an object');
+
+      expect(() => new NoDirectories({level: 'error', options: 1} as any))
+        .toThrow('Invalid options - must be an object');
+    });
+  });
 });
