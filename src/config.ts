@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { CONFIG_FILE_NAME, CWD, UTF8 } from './constants';
+import { CONFIG_FILE_NAME, UTF8 } from './constants';
 import * as rules from './rules';
 import { Config } from './types';
 
-function getConfig (): {configPath: string, config: Config} {
-  let directoryPath = CWD;
+function getConfig (fullPath: string): {configPath: string, config: Config} {
+  let directoryPath = fullPath;
   let directoryName = path.basename(directoryPath);
   let filePath = path.resolve(directoryPath, CONFIG_FILE_NAME);
 
@@ -49,7 +49,7 @@ function getConfig (): {configPath: string, config: Config} {
     filePath = path.resolve(directoryPath, CONFIG_FILE_NAME);
   }
 
-  throw new Error(`Could not find an ${CONFIG_FILE_NAME} file in the current working directory or above`);
+  throw new Error(`Could not find an ${CONFIG_FILE_NAME} file anywhere in path ${fullPath}`);
 }
 
 export default getConfig;

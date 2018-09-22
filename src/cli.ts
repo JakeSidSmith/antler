@@ -9,11 +9,6 @@ import { CWD, MESSAGE_PREFIX } from './constants';
 import * as rules from './rules';
 
 function init () {
-  const { configPath, config } = getConfig();
-
-  // tslint:disable-next-line:no-console
-  console.error(`${MESSAGE_PREFIX}${chalk.green(`Found config file at ${configPath}`)}`);
-
   const [ , , filePath] = process.argv;
 
   if (!filePath) {
@@ -29,6 +24,11 @@ function init () {
   if (!fs.lstatSync(fullPath).isDirectory()) {
     throw new Error(`Provided path ${fullPath} is not a directory`);
   }
+
+  const { configPath, config } = getConfig(fullPath);
+
+  // tslint:disable-next-line:no-console
+  console.error(`${MESSAGE_PREFIX}${chalk.green(`Found config file at ${configPath}`)}`);
 
   const ruleInstances = Object.keys(config.rules).map((ruleName: keyof typeof rules) => {
     const ruleConfig = config.rules[ruleName];
