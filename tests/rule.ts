@@ -9,14 +9,6 @@ describe('Rule', () => {
       }
     }
 
-    public report (error: Error | string) {
-      super.report(error);
-    }
-
-    public error (error: Error | string) {
-      super.error(error);
-    }
-
     protected getName () {
       return 'NoDirectories';
     }
@@ -42,21 +34,21 @@ describe('Rule', () => {
     it('should create errors from error or string', () => {
       const instance = new NoDirectories('error');
 
-      expect(() => instance.report('error')).toThrow('ERROR NoDirectories: error');
-      expect(() => instance.report(new Error('error'))).toThrow('ERROR NoDirectories: error');
+      expect(() => (instance as any).report('error')).toThrow('ERROR NoDirectories: error');
+      expect(() => (instance as any).report(new Error('error'))).toThrow('ERROR NoDirectories: error');
     });
 
     it('should create warnings from error or string', () => {
       const instance = new NoDirectories('warning');
 
-      expect(() => instance.report('warning')).toThrow('WARNING NoDirectories: warning');
-      expect(() => instance.report(new Error('warning'))).toThrow('WARNING NoDirectories: warning');
+      expect(() => (instance as any).report('warning')).toThrow('WARNING NoDirectories: warning');
+      expect(() => (instance as any).report(new Error('warning'))).toThrow('WARNING NoDirectories: warning');
     });
 
     it('should not report if rule is disabled', () => {
       const instance = new NoDirectories('off');
 
-      expect(() => instance.report('error')).not.toThrow('ERROR NoDirectories: error');
+      expect(() => (instance as any).report('error')).not.toThrow('ERROR NoDirectories: error');
     });
   });
 
@@ -64,8 +56,10 @@ describe('Rule', () => {
     it('should create errors from error or string', () => {
       const instance = new NoDirectories('error');
 
-      expect(() => instance.error('error')).toThrow('NoDirectories: error');
-      expect(() => instance.error(new Error('error'))).toThrow('NoDirectories: error');
+      expect(() => (instance as any).error('error')).toThrow('NoDirectories: error');
+      expect(() => (instance as any).error(new Error('error'))).toThrow('NoDirectories: error');
+    });
+  });
 
   describe('setLevel', () => {
     it('should error if level is not a string', () => {
