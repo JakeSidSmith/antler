@@ -1,4 +1,5 @@
 import { AntlerError } from './antler-error';
+import { AntlerWarning } from './antler-warning';
 import { LEVELS } from './constants';
 import { Level, Node, RuleConfig, RuleOptions } from './types';
 
@@ -22,10 +23,17 @@ export abstract class Rule {
   protected abstract getName(): string;
 
   protected report (error: Error | string) {
-    throw new AntlerError(
-      `${this.level.toUpperCase()} ${this.getName()}: ${error instanceof Error ? error.message : error}`,
-      this.level
-    );
+    if (this.level === 'error') {
+      throw new AntlerError(
+        `${this.getName()}: ${error instanceof Error ? error.message : error}`,
+        this.level
+      );
+    } else if (this.level === 'warning') {
+      throw new AntlerWarning(
+        `${this.getName()}: ${error instanceof Error ? error.message : error}`,
+        this.level
+      );
+    }
   }
 
   private setLevel (level?: Level) {

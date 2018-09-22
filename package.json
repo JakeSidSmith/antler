@@ -33,6 +33,7 @@
   "homepage": "https://github.com/jakesidsmith/antler#readme",
   "dependencies": {
     "@types/node": "^10.10.1",
+    "chalk": "^2.4.1",
     "typescript": "^2.9.2"
   },
   "devDependencies": {

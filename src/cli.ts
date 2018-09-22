@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 
+import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 import beginCrawl from './';
@@ -10,7 +11,8 @@ import * as rules from './rules';
 function init () {
   const { configPath, config } = getConfig();
 
-  console.error(`${MESSAGE_PREFIX}Found config file at ${configPath}`); // tslint:disable-line:no-console
+  // tslint:disable-next-line:no-console
+  console.error(`${MESSAGE_PREFIX}${chalk.green(`Found config file at ${configPath}`)}`);
 
   const [ , , filePath] = process.argv;
 
@@ -41,6 +43,6 @@ try {
 } catch (error) {
   const message = error && error.message ? error.message : error;
 
-  console.error(`${MESSAGE_PREFIX}${message}`); // tslint:disable-line:no-console
+  console.error(`${MESSAGE_PREFIX}${chalk.red(message)}`); // tslint:disable-line:no-console
   process.exit(1);
 }
