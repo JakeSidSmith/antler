@@ -11,13 +11,13 @@
     "FileName": {
       "level": "error",
       "options": {
-        "allow": "^[a-z-]+\\.[a-z-]+$"
+        "allow": "^[a-z-.]+$"
       }
     },
     "DirectoryName": {
       "level": "error",
       "options": {
-        "allow": "^[a-z-]+\\.[a-z-]+$",
+        "allow": "^[a-z-]+$",
         "disallow": "^(actions|reducers|components|__tests__)$"
       }
     },
