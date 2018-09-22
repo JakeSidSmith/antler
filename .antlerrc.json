@@ -24,7 +24,7 @@
     "Path": {
       "level": "error",
       "options": {
-        "disallow": "common/[a-z-]+\\.[a-z-]+$"
+        "disallow": "common/[a-z-]+\\.[a-z-.]+$"
       }
     }
   }
