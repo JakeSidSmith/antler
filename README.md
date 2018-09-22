@@ -60,7 +60,7 @@ Each rule can be provided with either a string representing the error level (`of
 
 Some rules allow (or require) the user to provide additional options as an object in the `options` key.
 
-Options are (at the time of writing) always strings or arrays of strings.
+Options are (at the time of writing) always strings, or arrays of strings.
 
 See the example `.antlerrc.json` file in the root of this project for a more complex example.
 
