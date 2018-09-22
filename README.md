@@ -139,3 +139,115 @@ foo/
 
 foo/
 ```
+
+### FileName
+
+Allows the user to define allowed and disallowed patterns to match all file names against.
+
+The patterns provided are converted to case sensitive regular expressions, and should be prefixed with `^` (start of string) and suffixed with `$` (end of string), if you want to ensure that the whole string matches your pattern, and not just a section of it.
+
+The options; `allow` and `disallow`, can be either a string, or array of strings.
+
+```json
+{
+  "FileName": {
+    "level": "error",
+    "options": {
+      "allow": "",
+      "disallow": ""
+    }
+  }
+}
+```
+
+### DirectoryName
+
+Allows the user to define allowed and disallowed patterns to match all directory names against.
+
+The patterns provided are converted to case sensitive regular expressions, and should be prefixed with `^` (start of string) and suffixed with `$` (end of string), if you want to ensure that the whole string matches your pattern, and not just a section of it.
+
+The options; `allow` and `disallow`, can be either a string, or array of strings.
+
+```json
+{
+  "DirectoryName": {
+    "level": "error",
+    "options": {
+      "allow": "",
+      "disallow": ""
+    }
+  }
+}
+```
+
+### Extension
+
+Allows the user to define allowed and disallowed patterns to match all file extensions against. The extensions are extracted using Node's `path.extname`, and so will include only the last period and following characters e.g.
+
+All of the following files will be tested against `.ts`:
+
+```
+index.ts
+index.d.ts
+index.min.ts
+```
+
+If you want to enforce checking of the `.min.ts` section, you should use the [FileName](#FileName) rule.
+
+The patterns provided are converted to case sensitive regular expressions, and should be prefixed with `^` (start of string) and suffixed with `$` (end of string), if you want to ensure that the whole string matches your pattern, and not just a section of it.
+
+The options; `allow` and `disallow`, can be either a string, or array of strings.
+
+```json
+{
+  "Extension": {
+    "level": "error",
+    "options": {
+      "allow": "",
+      "disallow": ""
+    }
+  }
+}
+```
+
+### Path
+
+Allows the user to define allowed and disallowed patterns to match all paths against. The paths will include the root directory that you specified in the command e.g.
+
+If you run:
+
+```shell
+antler src/
+```
+
+Against the structure:
+
+```
+src/
+  foo/
+    bar.js
+```
+
+The paths that are checked will be:
+
+```
+src/
+src/foo/
+src/foo/bar.js
+```
+
+The patterns provided are converted to case sensitive regular expressions, and should be prefixed with `^` (start of string) and suffixed with `$` (end of string), if you want to ensure that the whole string matches your pattern, and not just a section of it.
+
+The options; `allow` and `disallow`, can be either a string, or array of strings.
+
+```json
+{
+  "Path": {
+    "level": "error",
+    "options": {
+      "allow": "",
+      "disallow": ""
+    }
+  }
+}
+```
