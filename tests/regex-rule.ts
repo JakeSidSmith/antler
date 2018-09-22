@@ -1,4 +1,5 @@
 import { RegexRule } from '../src/regex-rule';
+import { Node } from '../src/types';
 
 describe('RegexRule', () => {
   class CustomRule extends RegexRule {
@@ -6,13 +7,17 @@ describe('RegexRule', () => {
       return 'custom-rule';
     }
 
-    protected getPart (resolvedPath: string) {
-      return resolvedPath;
+    protected shouldRun () {
+      return true;
+    }
+
+    protected getPart (node: Node) {
+      return node.path;
     }
   }
 
   it('should create an instance', () => {
-    const instance = new CustomRule([2, {allow: ''}]);
+    const instance = new CustomRule({level: 'error', options: {allow: ''}});
 
     expect(instance instanceof RegexRule).toBe(true);
   });
@@ -27,7 +32,7 @@ describe('RegexRule', () => {
 
   it('should throw invalid options', () => {
     function createInstance() {
-      return new CustomRule(2);
+      return new CustomRule('error');
     }
 
     expect(createInstance).toThrow('ERROR custom-rule: Invalid options, must be an object');
@@ -35,7 +40,7 @@ describe('RegexRule', () => {
 
   it('should throw no keys', () => {
     function createInstance() {
-      return new CustomRule([2, {}]);
+      return new CustomRule({level: 'error', options: {}});
     }
 
     expect(createInstance).toThrow('ERROR custom-rule: No keys in options');
@@ -43,7 +48,7 @@ describe('RegexRule', () => {
 
   it('should throw invalid keys', () => {
     function createInstance() {
-      return new CustomRule([2, {nope: ''}]);
+      return new CustomRule({level: 'error', options: {nope: ''}});
     }
 
     expect(createInstance).toThrow('ERROR custom-rule: Invalid key in options - nope');
@@ -51,7 +56,7 @@ describe('RegexRule', () => {
 
   it('should throw invalid key types', () => {
     function createInstance() {
-      return new CustomRule([2, {allow: 1 as any}]);
+      return new CustomRule({level: 'error', options: {allow: 5}} as any);
     }
 
     expect(createInstance).toThrow('ERROR custom-rule: Type of key allow must be a string or array of strings');
