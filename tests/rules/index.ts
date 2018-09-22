@@ -29,4 +29,14 @@ describe('rules', () => {
       expect(rulesClassNames).toContain(className);
     });
   });
+
+  it('should all return the name of their class from the getName method', () => {
+    for (const key in rules) {
+      if (rules.hasOwnProperty(key)) {
+        const instance = new rules[key as keyof typeof rules]({level: 'error', options: {allow: ''}});
+
+        expect((instance as any).getName()).toBe(instance.constructor.name);
+      }
+    }
+  });
 });
