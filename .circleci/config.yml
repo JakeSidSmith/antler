@@ -41,4 +41,4 @@ jobs:
           command: npm test
       - run:
           name: Dist
-          command: npm dist
+          command: npm run dist
