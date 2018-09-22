@@ -1,3 +1,5 @@
+export type Callback = () => void;
+
 export type Level = 'off' | 'warning' | 'error';
 
 export interface Config {

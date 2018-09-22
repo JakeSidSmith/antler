@@ -35,7 +35,32 @@ function init () {
     return new rules[ruleName](ruleConfig);
   });
 
-  beginCrawl(fullPath, ruleInstances);
+  let warningCount = 0;
+  let errorCount = 0;
+
+  function reportWarning () {
+    warningCount += 1;
+  }
+
+  function reportError () {
+    errorCount += 1;
+  }
+
+  beginCrawl(fullPath, ruleInstances, reportWarning, reportError);
+
+  if (!warningCount && !errorCount) {
+    // tslint:disable-next-line:no-console
+    console.error(`${MESSAGE_PREFIX}${chalk.green('Completed with no warnings or errors!')}`);
+  } else {
+    const warnings = chalk.yellow(`${warningCount} warnings`);
+    const errors = chalk.red(`${errorCount} errors`);
+    // tslint:disable-next-line:no-console
+    console.error(`${MESSAGE_PREFIX}Completed with ${warnings} and ${errors}`);
+  }
+
+  if (errorCount) {
+    process.exit(1);
+  }
 }
 
 try {
