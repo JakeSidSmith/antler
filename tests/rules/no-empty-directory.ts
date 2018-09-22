@@ -39,13 +39,13 @@ describe('NoEmptyDirectory', () => {
     it('should not throw for directories with children', () => {
       const instance = new NoEmptyDirectory('error');
 
-      expect(() => instance.run(fullDirectory)).not.toThrow('not have any contents');
+      expect(() => instance.run(fullDirectory)).not.toThrow();
     });
 
     it('should ignore files', () => {
       const instance = new NoEmptyDirectory('error');
 
-      expect(() => instance.run(fileNode)).not.toThrow('not have any contents');
+      expect(() => instance.run(fileNode)).not.toThrow();
     });
   });
 });

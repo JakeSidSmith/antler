@@ -55,7 +55,7 @@ describe('NoJuniors', () => {
     it('should not throw for children that do not share a name with their parent', () => {
       const instance = new NoJuniors('error');
 
-      expect(() => instance.run(okayNode)).not.toThrow('not have any contents');
+      expect(() => instance.run(okayNode)).not.toThrow();
     });
   });
 });
