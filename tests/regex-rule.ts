@@ -2,9 +2,9 @@ import { RegexRule } from '../src/regex-rule';
 import { Node } from '../src/types';
 
 describe('RegexRule', () => {
-  class CustomRule extends RegexRule {
+  class DirectoryPath extends RegexRule {
     protected getName () {
-      return 'CustomRule';
+      return 'DirectoryPath';
     }
 
     protected shouldRun (node: Node) {
@@ -18,54 +18,54 @@ describe('RegexRule', () => {
 
   describe('creation', () => {
     it('should create an instance', () => {
-      const instance = new CustomRule({level: 'error', options: {allow: ''}});
+      const instance = new DirectoryPath({level: 'error', options: {allow: ''}});
 
       expect(instance instanceof RegexRule).toBe(true);
     });
 
     it('should throw invalid config', () => {
       function createInstance() {
-        return new CustomRule(null as any);
+        return new DirectoryPath(null as any);
       }
 
-      expect(createInstance).toThrow('CustomRule: Invalid config - must be a string or object');
+      expect(createInstance).toThrow('DirectoryPath: Invalid config - must be a string or object');
     });
 
     it('should throw invalid options', () => {
       function createInstance() {
-        return new CustomRule('error');
+        return new DirectoryPath('error');
       }
 
-      expect(createInstance).toThrow('CustomRule: Invalid options - must be an object');
+      expect(createInstance).toThrow('DirectoryPath: Invalid options - must be an object');
     });
 
     it('should throw invalid keys (no allow / disallow)', () => {
       function createInstance() {
-        return new CustomRule({level: 'error', options: {}});
+        return new DirectoryPath({level: 'error', options: {}});
       }
 
-      expect(createInstance).toThrow('CustomRule: Invalid option keys - must include one of allow, disallow');
+      expect(createInstance).toThrow('DirectoryPath: Invalid option keys - must include one of allow, disallow');
     });
 
     it('should throw invalid keys', () => {
       function createInstance() {
-        return new CustomRule({level: 'error', options: {nope: '', allow: ''}});
+        return new DirectoryPath({level: 'error', options: {nope: '', allow: ''}});
       }
 
-      expect(createInstance).toThrow('CustomRule: Invalid key in options - nope');
+      expect(createInstance).toThrow('DirectoryPath: Invalid key in options - nope');
     });
 
     it('should throw invalid key types', () => {
       function createInstance() {
-        return new CustomRule({level: 'error', options: {allow: 5}} as any);
+        return new DirectoryPath({level: 'error', options: {allow: 5}} as any);
       }
 
-      expect(createInstance).toThrow('CustomRule: Type of key allow must be a string or array of strings');
+      expect(createInstance).toThrow('DirectoryPath: Type of key allow must be a string or array of strings');
     });
   });
 
   describe('reporting', () => {
-    const directoryNode: Node = {
+    const invalidDirectoryNode: Node = {
       path: 'src/invalid',
       fullPath: '~/src/invalid',
       parentName: 'src',
@@ -76,37 +76,37 @@ describe('RegexRule', () => {
     };
 
     it('should report if paths do not match allowed paths string', () => {
-      const instance = new CustomRule({level: 'error', options: {allow: '^src/valid$'}});
+      const instance = new DirectoryPath({level: 'error', options: {allow: '^src/valid$'}});
 
-      expect(() => instance.run(directoryNode)).toThrow('does not match allowed');
+      expect(() => instance.run(invalidDirectoryNode)).toThrow('does not match allowed');
     });
 
     it('should report if paths do not match allowed paths array', () => {
-      const instance = new CustomRule({level: 'error', options: {allow: ['^src/valid$']}});
+      const instance = new DirectoryPath({level: 'error', options: {allow: ['^src/valid$']}});
 
-      expect(() => instance.run(directoryNode)).toThrow('does not match allowed');
+      expect(() => instance.run(invalidDirectoryNode)).toThrow('does not match allowed');
     });
 
     it('should report if paths match disallowed paths string', () => {
-      const instance = new CustomRule({level: 'error', options: {disallow: 'invalid'}});
+      const instance = new DirectoryPath({level: 'error', options: {disallow: 'invalid'}});
 
-      expect(() => instance.run(directoryNode)).toThrow('matches disallowed');
+      expect(() => instance.run(invalidDirectoryNode)).toThrow('matches disallowed');
     });
 
     it('should report if paths match disallowed paths array', () => {
-      const instance = new CustomRule({level: 'error', options: {disallow: ['invalid']}});
+      const instance = new DirectoryPath({level: 'error', options: {disallow: ['invalid']}});
 
-      expect(() => instance.run(directoryNode)).toThrow('matches disallowed');
+      expect(() => instance.run(invalidDirectoryNode)).toThrow('matches disallowed');
     });
 
     it('should not run if shouldRun returns false', () => {
-      const instance = new CustomRule({level: 'error', options: {allow: '^src/valid$'}});
-      const fileNode = {
-        ...directoryNode,
+      const instance = new DirectoryPath({level: 'error', options: {allow: '^src/valid$'}});
+      const invalidFileNode = {
+        ...invalidDirectoryNode,
         isDirectory: false,
       };
 
-      expect(() => instance.run(fileNode)).not.toThrow('does not match allowed');
+      expect(() => instance.run(invalidFileNode)).not.toThrow('does not match allowed');
     });
   });
 });
