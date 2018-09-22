@@ -66,6 +66,26 @@ describe('Rule', () => {
 
       expect(() => instance.error('error')).toThrow('NoDirectories: error');
       expect(() => instance.error(new Error('error'))).toThrow('NoDirectories: error');
+
+  describe('setLevel', () => {
+    it('should error if level is not a string', () => {
+      expect(() => new NoDirectories({level: 5} as any)).toThrow('Error level must be');
+    });
+
+    it('should error if level is not a know level', () => {
+      expect(() => new NoDirectories({level: 'wat'} as any)).toThrow('Error level must be');
+    });
+
+    it('should set the error level from a string', () => {
+      const instance = new NoDirectories('warning');
+
+      expect((instance as any).level).toBe('warning');
+    });
+
+    it('should set the error level from a config object', () => {
+      const instance = new NoDirectories({level: 'error'});
+
+      expect((instance as any).level).toBe('error');
     });
   });
 });
