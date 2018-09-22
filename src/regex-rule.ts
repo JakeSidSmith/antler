@@ -13,12 +13,12 @@ export abstract class RegexRule extends Rule {
 
     if (this.options) {
       if (!(('allow' in this.options) || ('disallow' in this.options))) {
-        this.report(`Invalid option keys - must include one of ${VALID_KEYS.join(', ')}`);
+        this.error(`Invalid option keys - must include one of ${VALID_KEYS.join(', ')}`);
       }
 
       for (const key in this.options) {
         if (VALID_KEYS.indexOf(key) < 0) {
-          this.report(`Invalid option key - ${key}`);
+          this.error(`Invalid key in options - ${key}`);
         }
       }
 
@@ -40,7 +40,7 @@ export abstract class RegexRule extends Rule {
       }
 
     } else {
-      this.report('Invalid options - must be an object');
+      this.error('Invalid options - must be an object');
     }
 
   }

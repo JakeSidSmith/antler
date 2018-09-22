@@ -1,3 +1,4 @@
+import chalk from '../node_modules/chalk';
 import { AntlerError } from './antler-error';
 import { AntlerWarning } from './antler-warning';
 import { LEVELS } from './constants';
@@ -14,7 +15,7 @@ export abstract class Rule {
       this.setLevel(config.level);
       this.setOptions(config.options);
     } else {
-      this.report('Invalid config - must be a string or object');
+      this.error('Invalid config - must be a string or object');
     }
   }
 
@@ -23,23 +24,31 @@ export abstract class Rule {
   protected abstract getName(): string;
 
   protected report (error: Error | string) {
+    const message = (error instanceof Error) && error.message ? error.message : error;
+
     if (this.level === 'error') {
       throw new AntlerError(
-        `${this.getName()}: ${error instanceof Error ? error.message : error}`,
+        `${this.getName()}: ${message}`,
         this.level
       );
     } else if (this.level === 'warning') {
       throw new AntlerWarning(
-        `${this.getName()}: ${error instanceof Error ? error.message : error}`,
+        `${this.getName()}: ${message}`,
         this.level
       );
     }
   }
 
+  protected error (error: Error | string) {
+    const message = (error instanceof Error) && error.message ? error.message : error;
+
+    throw new Error(chalk.red(`${this.getName()}: ${message}`));
+  }
+
   private setLevel (level?: Level) {
     if (typeof level === 'string') {
       if (LEVELS.indexOf(level) < 0) {
-        this.report(`Error level must be one of ${LEVELS.join(', ')}`);
+        this.error(`Error level must be one of ${LEVELS.join(', ')}`);
       } else {
         this.level = level;
       }
@@ -52,7 +61,7 @@ export abstract class Rule {
     if (options && typeof (options as any) === 'object' && !Array.isArray(options)) {
       this.options = options;
     } else if (typeof options !== 'undefined') {
-      this.report('Invalid options - must be an object');
+      this.error('Invalid options - must be an object');
     }
   }
 }
