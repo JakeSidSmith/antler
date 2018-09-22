@@ -12,7 +12,7 @@ export abstract class RegexRule extends Rule {
     super(config);
 
     if (this.options) {
-      if (!(this.options.allow || this.options.disallow)) {
+      if (!(('allow' in this.options) || ('disallow' in this.options))) {
         this.report(`Invalid option keys - must include one of ${VALID_KEYS.join(', ')}`);
       }
 
