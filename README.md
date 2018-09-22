@@ -20,6 +20,18 @@ Note: `-S` is shorthand for `--save` to automatically add this to your package.j
 
 If you are using a version of NPM that doesn't support package lock files I'd recommend using `-SE` or `--save-exact`, which will pin the version in your package.json.
 
+## Usage
+
+Currently Antler only supports supplying a root directory to lint from, but I intend allow multiple root directories and or globs in the future.
+
+```shell
+antler <directory>
+```
+
+If no directory is supplied Antler won't run. If you'd like to lint the current directory you can supply `.` or `./`, as you like.
+
+Note: there are no rules configured by default. You will have to configure your own `.antlerrc.json` config file as explained below.
+
 ## Configuration
 
 All Antler configuration is stored in an `.antlerrc.json` file. Antler will look in the target directory, and all of its parent directories until it finds a file named `.antlerrc.json`.
