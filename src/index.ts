@@ -7,11 +7,12 @@ import { Node } from './types';
 
 const MATCHES_LEADING_SLASH = /^\//;
 
-function createNode (fullPath: string): Node {
+function createNode (rootPath: string, fullPath: string): Node {
   const parentFullPath = path.resolve(fullPath, '../');
   const parentName = path.basename(parentFullPath);
 
-  const shortPath = fullPath.replace(parentFullPath, '').replace(MATCHES_LEADING_SLASH, '');
+  const shortPath = fullPath.replace(rootPath, '').replace(MATCHES_LEADING_SLASH, '');
+
   const name = path.basename(fullPath);
 
   let childNames: ReadonlyArray<string> = [];
@@ -39,6 +40,7 @@ function createNode (fullPath: string): Node {
 }
 
 function crawl (
+  rootPath: string,
   node: Node,
   ruleInstances: ReadonlyArray<Rule>,
   indent: string
@@ -58,16 +60,17 @@ function crawl (
 
   node.childNames.forEach((childName) => {
     const fullPath = path.resolve(node.fullPath, childName);
-    const childNode = createNode(fullPath);
+    const childNode = createNode(rootPath, fullPath);
 
-    crawl(childNode, ruleInstances, `  ${indent}`);
+    crawl(rootPath, childNode, ruleInstances, `  ${indent}`);
   });
 }
 
 function beginCrawl (fullPath: string, ruleInstances: ReadonlyArray<Rule>) {
-  const node = createNode(fullPath);
+  const rootPath = path.resolve(fullPath, '../');
+  const node = createNode(rootPath, fullPath);
 
-  crawl(node, ruleInstances, '');
+  crawl(rootPath, node, ruleInstances, '');
 }
 
 export default beginCrawl;
