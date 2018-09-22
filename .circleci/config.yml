@@ -27,8 +27,8 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Clean install
-          command: npm ci
+          name: Install
+          command: npm i
 
       - save_cache:
           paths:
