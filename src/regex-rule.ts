@@ -19,6 +19,8 @@ export abstract class RegexRule extends Rule {
       for (const key in this.options) {
         if (VALID_KEYS.indexOf(key) < 0) {
           this.error(`Invalid key in options - ${key}`);
+        } else if (!(typeof this.options[key] === 'string' || Array.isArray(this.options[key]))) {
+          this.error(`Type of key ${key} must be a string or array of strings`);
         }
       }
 

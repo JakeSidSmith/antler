@@ -4,7 +4,7 @@ import { Node } from '../src/types';
 describe('RegexRule', () => {
   class CustomRule extends RegexRule {
     protected getName () {
-      return 'custom-rule';
+      return 'CustomRule';
     }
 
     protected shouldRun () {
@@ -27,7 +27,7 @@ describe('RegexRule', () => {
       return new CustomRule(null as any);
     }
 
-    expect(createInstance).toThrow('ERROR custom-rule: Invalid config, must be a string, number, or array');
+    expect(createInstance).toThrow('CustomRule: Invalid config - must be a string or object');
   });
 
   it('should throw invalid options', () => {
@@ -35,23 +35,23 @@ describe('RegexRule', () => {
       return new CustomRule('error');
     }
 
-    expect(createInstance).toThrow('ERROR custom-rule: Invalid options, must be an object');
+    expect(createInstance).toThrow('CustomRule: Invalid options - must be an object');
   });
 
-  it('should throw no keys', () => {
+  it('should throw invalid keys (no allow / disallow)', () => {
     function createInstance() {
       return new CustomRule({level: 'error', options: {}});
     }
 
-    expect(createInstance).toThrow('ERROR custom-rule: No keys in options');
+    expect(createInstance).toThrow('CustomRule: Invalid option keys - must include one of allow, disallow');
   });
 
   it('should throw invalid keys', () => {
     function createInstance() {
-      return new CustomRule({level: 'error', options: {nope: ''}});
+      return new CustomRule({level: 'error', options: {nope: '', allow: ''}});
     }
 
-    expect(createInstance).toThrow('ERROR custom-rule: Invalid key in options - nope');
+    expect(createInstance).toThrow('CustomRule: Invalid key in options - nope');
   });
 
   it('should throw invalid key types', () => {
@@ -59,6 +59,6 @@ describe('RegexRule', () => {
       return new CustomRule({level: 'error', options: {allow: 5}} as any);
     }
 
-    expect(createInstance).toThrow('ERROR custom-rule: Type of key allow must be a string or array of strings');
+    expect(createInstance).toThrow('CustomRule: Type of key allow must be a string or array of strings');
   });
 });
