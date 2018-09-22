@@ -1,7 +1,7 @@
 import { Rule } from './rule';
 import { Level, Node, RuleConfig } from './types';
 
-const REGEX_FLAGS = 'i';
+const REGEX_FLAGS = '';
 const VALID_KEYS = ['allow', 'disallow'];
 
 export abstract class RegexRule extends Rule {
