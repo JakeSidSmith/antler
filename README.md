@@ -109,3 +109,33 @@ foo/
 foo/
   foo/
 ```
+
+### NoEmptyDirectory
+
+Ensures that there are no empty directories.
+
+```json
+{
+  "NoEmptyDirectory": "error"
+}
+```
+
+#### Acceptable
+
+```
+foo/
+  bar/
+    baz.js
+
+foo/
+  bar.js
+```
+
+#### Unacceptable
+
+```
+foo/
+  bar/
+
+foo/
+```
