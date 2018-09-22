@@ -117,5 +117,13 @@ describe('RegexRule', () => {
 
       expect(() => instance.run(invalidFileNode)).not.toThrow('does not match allowed');
     });
+
+    it('should use case sensitive regexes', () => {
+      const instance1 = new DirectoryPath({level: 'error', options: {allow: '^[a-z-/]+$'}});
+      const instance2 = new DirectoryPath({level: 'error', options: {allow: '^[A-Z-/]+$'}});
+
+      expect(() => instance1.run(invalidDirectoryNode)).not.toThrow('does not match allowed');
+      expect(() => instance2.run(invalidDirectoryNode)).toThrow('does not match allowed');
+    });
   });
 });
