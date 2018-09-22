@@ -1,7 +1,7 @@
 {
   "rules": {
-    "NoLonelyIndex": "error",
-    "NoJuniors": "error",
+    "NoLonelyIndex": "warning",
+    "NoJuniors": "warning",
     "Extension": {
       "level": "error",
       "options": {
