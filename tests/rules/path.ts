@@ -1,5 +1,5 @@
 import { RegexRule } from '../../src/regex-rule';
-import { Path } from '../../src/rules/Path';
+import { Path } from '../../src/rules/path';
 import { Node } from '../../src/types';
 
 describe('Path', () => {
