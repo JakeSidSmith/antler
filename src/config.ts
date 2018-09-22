@@ -1,13 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import { CWD, FILE_NAME, UTF8 } from './constants';
+import { CONFIG_FILE_NAME, CWD, UTF8 } from './constants';
 import * as rules from './rules';
 import { Config } from './types';
 
 function getConfig (): {configPath: string, config: Config} {
   let directoryPath = CWD;
   let directoryName = path.basename(directoryPath);
-  let filePath = path.resolve(directoryPath, FILE_NAME);
+  let filePath = path.resolve(directoryPath, CONFIG_FILE_NAME);
 
   while (directoryName) {
     if (fs.existsSync(filePath) && fs.lstatSync(filePath).isFile()) {
@@ -46,10 +46,10 @@ function getConfig (): {configPath: string, config: Config} {
 
     directoryPath = path.resolve(directoryPath, '../');
     directoryName = path.basename(directoryPath);
-    filePath = path.resolve(directoryPath, FILE_NAME);
+    filePath = path.resolve(directoryPath, CONFIG_FILE_NAME);
   }
 
-  throw new Error('Could not find an .antlerrc.json file in the current working directory or above');
+  throw new Error(`Could not find an ${CONFIG_FILE_NAME} file in the current working directory or above`);
 }
 
 export default getConfig;
