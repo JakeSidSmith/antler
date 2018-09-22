@@ -19,7 +19,7 @@
       "level": "error",
       "options": {
         "allow": "^[a-z-]+$",
-        "disallow": "^(actions|reducers|components|__tests__)$"
+        "disallow": "^(actions|reducers|components|types|__tests__)$"
       }
     },
     "Path": {
