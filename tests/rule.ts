@@ -13,6 +13,10 @@ describe('Rule', () => {
       super.report(error);
     }
 
+    public error (error: Error | string) {
+      super.error(error);
+    }
+
     protected getName () {
       return 'NoDirectories';
     }
@@ -53,6 +57,15 @@ describe('Rule', () => {
       const instance = new NoDirectories('off');
 
       expect(() => instance.report('error')).not.toThrow('ERROR NoDirectories: error');
+    });
+  });
+
+  describe('error', () => {
+    it('should create errors from error or string', () => {
+      const instance = new NoDirectories('error');
+
+      expect(() => instance.error('error')).toThrow('NoDirectories: error');
+      expect(() => instance.error(new Error('error'))).toThrow('NoDirectories: error');
     });
   });
 });
