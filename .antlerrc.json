@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "NoLonelyIndex": "warning",
+    "NoJuniors": "warning",
+    "NoEmptyDirectory": "error",
+    "Extension": {
+      "level": "error",
+      "options": {
+        "allow": "tsx?"
+      }
+    },
+    "FileName": {
+      "level": "error",
+      "options": {
+        "allow": "^[a-z-.]+$"
+      }
+    },
+    "DirectoryName": {
+      "level": "error",
+      "options": {
+        "allow": "^[a-z-]+$",
+        "disallow": "^(actions|reducers|components|types|__tests__)$"
+      }
+    },
+    "Path": {
+      "level": "error",
+      "options": {
+        "disallow": "common/[a-z-]+\\.[a-z-.]+$"
+      }
+    }
+  }
+}
