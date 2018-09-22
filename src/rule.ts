@@ -47,7 +47,7 @@ export abstract class Rule {
         this.level = level;
       }
     } else {
-      this.level = 'error';
+      this.error(`Error level must be one of ${LEVELS.join(', ')}`);
     }
   }
 
