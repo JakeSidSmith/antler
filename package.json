@@ -9,7 +9,7 @@
     "lint": "tsc --noEmit && tslint --project tsconfig.json '{src,tests}/**/*.ts?(x)'",
     "tests": "jest",
     "test": "npm run lint && npm run tests -- --coverage --runInBand",
-    "prepare": "npm run dist"
+    "prepublishOnly": "npm run dist"
   },
   "repository": {
     "type": "git",
