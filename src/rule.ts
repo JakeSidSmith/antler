@@ -10,7 +10,7 @@ export abstract class Rule {
   public constructor (config: Level | RuleConfig) {
     if (typeof config === 'string') {
       this.setLevel(config);
-    } else if (config && typeof config === 'object' && !Array.isArray(config)) {
+    } else if (config && typeof (config as any) === 'object' && !Array.isArray(config)) {
       this.setLevel(config.level);
       this.setOptions(config.options);
     } else {
@@ -49,7 +49,7 @@ export abstract class Rule {
   }
 
   private setOptions (options?: RuleOptions) {
-    if (options && typeof options === 'object' && !Array.isArray(options)) {
+    if (options && typeof (options as any) === 'object' && !Array.isArray(options)) {
       this.options = options;
     } else if (typeof options !== 'undefined') {
       this.report('Invalid options - must be an object');
