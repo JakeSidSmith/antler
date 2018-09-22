@@ -1,6 +1,6 @@
 {
   "name": "antler",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Directory structure linter",
   "main": "dist/index.js",
   "bin": "dist/cli.js",
