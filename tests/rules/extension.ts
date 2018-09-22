@@ -4,8 +4,8 @@ import { Node } from '../../src/types';
 
 describe('Extension', () => {
   const fileNode: Node = {
-    fullPath: 'parent/child.json',
-    path: 'child.json',
+    fullPath: 'root/parent/child.json',
+    path: 'parent/child.json',
     name: 'child.json',
     parentName: 'parent',
     siblingNamesIncludingSelf: ['child.json'],

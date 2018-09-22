@@ -4,8 +4,8 @@ import { Node } from '../../src/types';
 
 describe('FileName', () => {
   const directoryNode: Node = {
-    fullPath: 'parent/child',
-    path: 'child',
+    fullPath: 'root/parent/child',
+    path: 'parent/child',
     name: 'child',
     parentName: 'parent',
     siblingNamesIncludingSelf: ['child'],
