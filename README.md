@@ -192,7 +192,7 @@ index.d.ts
 index.min.ts
 ```
 
-If you want to enforce checking of the `.min.ts` section, you should use the [FileName](#FileName) rule.
+If you want to enforce checking of the `.min.ts` section, you should use the [FileName](#filename) rule.
 
 The patterns provided are converted to case sensitive regular expressions, and should be prefixed with `^` (start of string) and suffixed with `$` (end of string), if you want to ensure that the whole string matches your pattern, and not just a section of it.
 
