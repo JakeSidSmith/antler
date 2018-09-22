@@ -51,3 +51,61 @@ Some rules allow the user to provide additional options as an object in the `opt
 Options are (at the time of writing) always strings or arrays of strings.
 
 See the example `.antlerrc.json` file in the root of this project for a more complex example.
+
+## Rules
+
+### NoLonelyIndex
+
+Ensures that no directories contain only a single index file e.g. `index.js`, or `index.html`.
+
+```json
+{
+  "NoLonelyIndex": "error"
+}
+```
+
+#### Acceptable
+
+```
+foo/
+  cli.js
+  index.js
+
+foo/
+  index/
+    file.js
+```
+
+#### Unacceptable
+
+```
+foo/
+  index.js
+```
+
+### NoJuniors
+
+Ensures that no files, or directories share a name with their parent directory.
+
+```json
+{
+  "NoJuniors": "error"
+}
+```
+
+#### Acceptable
+
+```
+foo/
+  bar.js
+```
+
+#### Unacceptable
+
+```
+foo/
+  foo.js
+
+foo/
+  foo/
+```
