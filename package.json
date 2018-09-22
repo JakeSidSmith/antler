@@ -48,7 +48,7 @@
       "src/**/*.(js|jsx|ts|tsx)"
     ],
     "setupFiles": [
-      "<rootDir>/tests/helpers/setup.ts"
+      "<rootDir>/tests/__helpers__/setup.ts"
     ],
     "coverageThreshold": {
       "global": {
@@ -63,7 +63,7 @@
     },
     "testRegex": "(/tests/.*|\\.(test|spec))\\.(ts|tsx|js|jsx)$",
     "testPathIgnorePatterns": [
-      "<rootDir>/tests/helpers/"
+      "<rootDir>/tests/__helpers__/",
       "<rootDir>/tests/__mocks__/"
     ],
     "moduleFileExtensions": [
