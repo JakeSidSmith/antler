@@ -1,15 +1,51 @@
 import fs from 'fs';
 import path from 'path';
 import { AntlerError } from './antler-error';
-import { CWD, MESSAGE_PREFIX } from './constants';
+import { MESSAGE_PREFIX } from './constants';
 import { Rule } from './rule';
+import { Node } from './types';
 
-function crawl (filePath: string, indent: string, ruleInstances: ReadonlyArray<Rule>) {
-  const resolvedPath = path.resolve(CWD, filePath);
+const MATCHES_LEADING_SLASH = /^\//;
 
+function createNode (fullPath: string): Node {
+  const parentFullPath = path.resolve(fullPath, '../');
+  const parentName = path.basename(parentFullPath);
+
+  const shortPath = fullPath.replace(parentFullPath, '').replace(MATCHES_LEADING_SLASH, '');
+  const name = path.basename(fullPath);
+
+  let childNames: ReadonlyArray<string> = [];
+  let siblingNamesIncludingSelf: ReadonlyArray<string> = [];
+  let isDirectory = false;
+
+  if (fs.lstatSync(fullPath).isDirectory()) {
+    isDirectory = true;
+    childNames = fs.readdirSync(fullPath);
+  }
+
+  if (fs.lstatSync(parentFullPath).isDirectory()) {
+    siblingNamesIncludingSelf = fs.readdirSync(parentFullPath);
+  }
+
+  return {
+    parentName,
+    path: shortPath,
+    name,
+    fullPath,
+    isDirectory,
+    siblingNamesIncludingSelf,
+    childNames,
+  };
+}
+
+function crawl (
+  node: Node,
+  ruleInstances: ReadonlyArray<Rule>,
+  indent: string
+) {
   ruleInstances.forEach((instance) => {
     try {
-      instance.run(resolvedPath);
+      instance.run(node);
     } catch (error) {
       const message = error && error.message ? error.message : error;
       console.error(`${MESSAGE_PREFIX}${message}`); // tslint:disable-line:no-console
@@ -20,11 +56,18 @@ function crawl (filePath: string, indent: string, ruleInstances: ReadonlyArray<R
     }
   });
 
-  if (fs.lstatSync(resolvedPath).isDirectory()) {
-    fs.readdirSync(resolvedPath).forEach((subFilePath) => {
-      crawl(path.resolve(resolvedPath, subFilePath), `  ${indent}`, ruleInstances);
-    });
-  }
+  node.childNames.forEach((childName) => {
+    const fullPath = path.resolve(node.fullPath, childName);
+    const childNode = createNode(fullPath);
+
+    crawl(childNode, ruleInstances, `  ${indent}`);
+  });
 }
 
-export default crawl;
+function beginCrawl (fullPath: string, ruleInstances: ReadonlyArray<Rule>) {
+  const node = createNode(fullPath);
+
+  crawl(node, ruleInstances, '');
+}
+
+export default beginCrawl;

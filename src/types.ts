@@ -16,3 +16,13 @@ export interface RuleConfig {
 export interface RuleOptions {
   readonly [i: string]: undefined | string | ReadonlyArray<string>;
 }
+
+export interface Node {
+  readonly fullPath: string;
+  readonly path: string;
+  readonly name: string;
+  readonly parentName: string;
+  readonly isDirectory: boolean;
+  readonly siblingNamesIncludingSelf: ReadonlyArray<string>;
+  readonly childNames: ReadonlyArray<string>;
+}

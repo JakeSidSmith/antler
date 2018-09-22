@@ -1,6 +1,6 @@
 import { AntlerError } from './antler-error';
 import { LEVELS } from './constants';
-import { Level, RuleConfig, RuleOptions } from './types';
+import { Level, Node, RuleConfig, RuleOptions } from './types';
 
 export abstract class Rule {
   protected options?: RuleOptions;
@@ -17,7 +17,7 @@ export abstract class Rule {
     }
   }
 
-  public abstract run(resolvedPath: string): void;
+  public abstract run(node: Node): void;
 
   protected abstract getName(): string;
 

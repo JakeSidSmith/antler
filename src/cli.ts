@@ -2,9 +2,9 @@
 
 import fs from 'fs';
 import path from 'path';
+import beginCrawl from './';
 import getConfig from './config';
 import { CWD, MESSAGE_PREFIX } from './constants';
-import crawl from './index';
 import * as rules from './rules';
 
 function init () {
@@ -18,10 +18,14 @@ function init () {
     throw new Error('No directory specified');
   }
 
-  const resolvedPath = path.resolve(CWD, filePath);
+  const fullPath = path.resolve(CWD, filePath);
 
-  if (!fs.lstatSync(resolvedPath).isDirectory()) {
-    throw new Error(`Provided path ${resolvedPath} is not a directory`);
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`Provided path ${fullPath} does not exist`);
+  }
+
+  if (!fs.lstatSync(fullPath).isDirectory()) {
+    throw new Error(`Provided path ${fullPath} is not a directory`);
   }
 
   const ruleInstances = Object.keys(config.rules).map((ruleName: keyof typeof rules) => {
@@ -29,7 +33,7 @@ function init () {
     return new rules[ruleName](ruleConfig);
   });
 
-  crawl(resolvedPath, '', ruleInstances);
+  beginCrawl(fullPath, ruleInstances);
 }
 
 try {

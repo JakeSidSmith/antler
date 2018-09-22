@@ -1,5 +1,5 @@
 import { Rule } from './rule';
-import { Level, RuleConfig } from './types';
+import { Level, Node, RuleConfig } from './types';
 
 const REGEX_FLAGS = 'i';
 const VALID_KEYS = ['allow', 'disallow'];
@@ -45,38 +45,38 @@ export abstract class RegexRule extends Rule {
 
   }
 
-  public run (resolvedPath: string) {
-    if (!this.shouldRun(resolvedPath)) {
+  public run (node: Node) {
+    if (!this.shouldRun(node)) {
       return;
     }
 
-    const part = this.getPart(resolvedPath);
+    const part = this.getPart(node);
 
     if (this.allow instanceof RegExp) {
       if (!this.allow.test(part)) {
-        return this.report(`${resolvedPath} does not match allowed pattern - ${this.allow}`);
+        return this.report(`${node.path} does not match allowed pattern - ${this.allow}`);
       }
     } else if (Array.isArray(this.allow)) {
       for (const allow of this.allow) {
         if (!allow.test(part)) {
-          return this.report(`${resolvedPath} does not match allowed pattern - ${allow}`);
+          return this.report(`${node.path} does not match allowed pattern - ${allow}`);
         }
       }
     }
 
     if (this.disallow instanceof RegExp) {
       if (this.disallow.test(part)) {
-        return this.report(`${resolvedPath} matches disallowed pattern - ${this.disallow}`);
+        return this.report(`${node.path} matches disallowed pattern - ${this.disallow}`);
       }
     } else if (Array.isArray(this.disallow)) {
       for (const disallow of this.disallow) {
         if (disallow.test(part)) {
-          return this.report(`${resolvedPath} matches disallowed pattern - ${disallow}`);
+          return this.report(`${node.path} matches disallowed pattern - ${disallow}`);
         }
       }
     }
   }
 
-  protected abstract getPart (resolvedPath: string): string;
-  protected abstract shouldRun (resolvedPath: string): boolean;
+  protected abstract getPart (node: Node): string;
+  protected abstract shouldRun (node: Node): boolean;
 }
