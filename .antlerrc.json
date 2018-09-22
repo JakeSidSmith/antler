@@ -2,6 +2,7 @@
   "rules": {
     "NoLonelyIndex": "warning",
     "NoJuniors": "warning",
+    "NoEmptyDirectory": "error",
     "Extension": {
       "level": "error",
       "options": {
