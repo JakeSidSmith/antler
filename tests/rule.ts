@@ -9,6 +9,10 @@ describe('Rule', () => {
       }
     }
 
+    public report (error: Error | string) {
+      super.report(error);
+    }
+
     protected getName () {
       return 'NoDirectories';
     }
@@ -27,6 +31,28 @@ describe('Rule', () => {
       }
 
       expect(createInstance).toThrow('NoDirectories: Invalid config - must be a string or object');
+    });
+  });
+
+  describe('report', () => {
+    it('should create errors from error or string', () => {
+      const instance = new NoDirectories('error');
+
+      expect(() => instance.report('error')).toThrow('ERROR NoDirectories: error');
+      expect(() => instance.report(new Error('error'))).toThrow('ERROR NoDirectories: error');
+    });
+
+    it('should create warnings from error or string', () => {
+      const instance = new NoDirectories('warning');
+
+      expect(() => instance.report('warning')).toThrow('WARNING NoDirectories: warning');
+      expect(() => instance.report(new Error('warning'))).toThrow('WARNING NoDirectories: warning');
+    });
+
+    it('should not report if rule is disabled', () => {
+      const instance = new NoDirectories('off');
+
+      expect(() => instance.report('error')).not.toThrow('ERROR NoDirectories: error');
     });
   });
 });
