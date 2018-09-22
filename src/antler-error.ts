@@ -1,12 +1,11 @@
 import chalk from 'chalk';
-import { Level } from './types';
 
 export class AntlerError extends Error {
   public message: string;
 
-  public constructor (message: string, level: Level) {
+  public constructor (message: string) {
     super(message);
 
-    this.message = `${chalk.red(level.toUpperCase())} ${message}`;
+    this.message = `${chalk.red('ERROR')} ${message}`;
   }
 }

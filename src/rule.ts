@@ -27,15 +27,9 @@ export abstract class Rule {
     const message = (error instanceof Error) && error.message ? error.message : error;
 
     if (this.level === 'error') {
-      throw new AntlerError(
-        `${this.getName()}: ${message}`,
-        this.level
-      );
+      throw new AntlerError(`${this.getName()}: ${message}`);
     } else if (this.level === 'warning') {
-      throw new AntlerWarning(
-        `${this.getName()}: ${message}`,
-        this.level
-      );
+      throw new AntlerWarning(`${this.getName()}: ${message}`);
     }
   }
 
