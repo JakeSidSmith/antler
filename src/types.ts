@@ -14,5 +14,5 @@ export interface RuleConfig {
 }
 
 export interface RuleOptions {
-  readonly [i: string]: string | ReadonlyArray<string>;
+  readonly [i: string]: undefined | string | ReadonlyArray<string>;
 }

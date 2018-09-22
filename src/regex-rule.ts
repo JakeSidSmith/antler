@@ -5,8 +5,8 @@ const REGEX_FLAGS = 'i';
 const VALID_KEYS = ['allow', 'disallow'];
 
 export abstract class RegexRule extends Rule {
-  protected allow: RegExp | ReadonlyArray<RegExp>;
-  protected disallow: RegExp | ReadonlyArray<RegExp>;
+  protected allow?: RegExp | ReadonlyArray<RegExp>;
+  protected disallow?: RegExp | ReadonlyArray<RegExp>;
 
   public constructor (config: Level | RuleConfig) {
     super(config);
@@ -23,16 +23,22 @@ export abstract class RegexRule extends Rule {
       }
 
       const {
-        allow = '',
-        disallow = '',
+        allow,
+        disallow,
       } = this.options;
 
-      this.allow = typeof allow === 'string' ?
-        new RegExp(allow, REGEX_FLAGS) :
-        allow.map((pattern) => new RegExp(pattern, REGEX_FLAGS));
-      this.disallow = typeof disallow === 'string' ?
-        new RegExp(disallow, REGEX_FLAGS) :
-        disallow.map((pattern) => new RegExp(pattern, REGEX_FLAGS));
+      if (typeof allow === 'string') {
+        this.allow = new RegExp(allow, REGEX_FLAGS);
+      } else if (Array.isArray(allow)) {
+        this.allow = allow.map((pattern) => new RegExp(pattern, REGEX_FLAGS));
+      }
+
+      if (typeof disallow === 'string') {
+        this.disallow = new RegExp(disallow, REGEX_FLAGS);
+      } else if (Array.isArray(disallow)) {
+        this.disallow = disallow.map((pattern) => new RegExp(pattern, REGEX_FLAGS));
+      }
+
     } else {
       this.report('Invalid options - must be an object');
     }
