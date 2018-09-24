@@ -22,7 +22,7 @@ If you are using a version of NPM that doesn't support package lock files I'd re
 
 ## Usage
 
-Currently Antler only supports supplying a root directory to lint from, but I intend allow multiple root directories in the future.
+Currently Antler only supports supplying a root directory to lint from, but I intend to allow multiple root directories in the future.
 
 ```shell
 antler <directory>
