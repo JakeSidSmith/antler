@@ -1,4 +1,4 @@
-import chalk from '../node_modules/chalk';
+import chalk from 'chalk';
 import { AntlerError } from './antler-error';
 import { AntlerWarning } from './antler-warning';
 import { LEVELS } from './constants';
