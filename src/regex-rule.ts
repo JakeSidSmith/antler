@@ -59,10 +59,16 @@ export abstract class RegexRule extends Rule {
         return this.report(`${node.path} does not match allowed pattern - ${this.allow}`);
       }
     } else if (Array.isArray(this.allow)) {
+      let matchedAllowed = false;
+
       for (const allow of this.allow) {
-        if (!allow.test(part)) {
-          return this.report(`${node.path} does not match allowed pattern - ${allow}`);
+        if (allow.test(part)) {
+          matchedAllowed = true;
         }
+      }
+
+      if (!matchedAllowed) {
+        return this.report(`${node.path} does not match any allowed patterns - ${this.allow.join(', ')}`);
       }
     }
 
