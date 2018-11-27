@@ -94,6 +94,12 @@ describe('RegexRule', () => {
       expect(() => instance.run(validDirectoryNode)).not.toThrow();
     });
 
+    it('should not report if at least one allowed path matches', () => {
+      const instance = new DirectoryPath({level: 'error', options: {allow: ['^src/valid$', '^src/invalid$']}});
+
+      expect(() => instance.run(validDirectoryNode)).not.toThrow();
+    });
+
     it('should report if paths match disallowed paths string', () => {
       const instance = new DirectoryPath({level: 'error', options: {disallow: 'invalid'}});
 
